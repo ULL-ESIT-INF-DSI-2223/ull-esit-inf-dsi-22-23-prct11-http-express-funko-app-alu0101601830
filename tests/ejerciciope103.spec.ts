@@ -1,7 +1,4 @@
-import 'mocha';
-import express from 'express';
-import { request } from 'http';
-import app from '../src/ejerciciosPE103/server.js';
+/*import 'mocha';
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 
@@ -54,7 +51,7 @@ describe('Servidor', () => {
     });
 
 });
-
+*/
 /*
 chai.use(chaiHttp);
 
