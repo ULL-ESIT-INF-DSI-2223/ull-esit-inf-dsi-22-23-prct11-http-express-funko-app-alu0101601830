@@ -1,7 +1,6 @@
 import express from 'express';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
-import { readNote } from '../notes.js';
 import { exec } from 'child_process';
 
 const app = express();
