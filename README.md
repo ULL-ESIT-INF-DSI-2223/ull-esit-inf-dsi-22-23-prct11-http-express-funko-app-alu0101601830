@@ -261,7 +261,9 @@ app.get('/funkos', (req, res) =>{
 ## Tests
 Los tests se han realizado con Mocha Chai y sus resultados son los siguientes:
 <p align="center">
+<img width="647" alt="tests" src="https://user-images.githubusercontent.com/117380181/233632132-bc2d303c-9bab-4aeb-a531-ac6ee01d92fb.png">
 
 </p>
 
 ## Conclusión
+En esta práctica he expandido mis conocimientos sobre servidores y clientes y como funcionan las peticiones, a parte de saber como manejar las distintas respuestas o los métodos HTTP.
