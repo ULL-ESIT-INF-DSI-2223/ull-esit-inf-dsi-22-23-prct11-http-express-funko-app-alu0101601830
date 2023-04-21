@@ -31,11 +31,11 @@ app.delete('/funkos', (req, res) => {
 ```
 <p align="center">
 
-*Ejemplo de ejecución*
+*Ejemplo de ejecución con éxito*
 </p>
 
 <p align="center">
-
+<img width="803" alt="delete éxito" src="https://user-images.githubusercontent.com/117380181/233631682-7a070b38-3174-4f3c-8b74-f678448852b2.png">
 </p>
 
 <p align="center">
@@ -44,7 +44,7 @@ app.delete('/funkos', (req, res) => {
 </p>
 
 <p align="center">
-
+<img width="850" alt="delete no éxito" src="https://user-images.githubusercontent.com/117380181/233631714-cbdf4382-13d5-4d61-8f3a-c82aefa22479.png">
 </p>
 
 **Patch**
@@ -110,10 +110,11 @@ app.patch('/funkos', (req, res) => {
 ```
 <p align="center">
 
-*Ejemplo de ejecución*
+*Ejemplo de ejecución con éxito*
 </p>
 
 <p align="center">
+<img width="766" alt="update éxito" src="https://user-images.githubusercontent.com/117380181/233631759-6864da48-707c-4644-b644-f9029c1dca15.png">
 
 </p>
 
@@ -123,7 +124,7 @@ app.patch('/funkos', (req, res) => {
 </p>
 
 <p align="center">
-
+<img width="871" alt="update no éxito" src="https://user-images.githubusercontent.com/117380181/233631815-4af485e2-f699-4696-a319-047894f1296a.png">
 </p>
 
 **Post**
@@ -189,10 +190,11 @@ app.post('/funkos', (req, res) => {
 ```
 <p align="center">
 
-*Ejemplo de ejecución*
+*Ejemplo de ejecución con éxito*
 </p>
 
 <p align="center">
+<img width="758" alt="añadir éxito" src="https://user-images.githubusercontent.com/117380181/233631891-e449b32c-fbfa-41ab-b69c-96cb5d41fdab.png">
 
 </p>
 
@@ -202,6 +204,7 @@ app.post('/funkos', (req, res) => {
 </p>
 
 <p align="center">
+<img width="862" alt="añadir no éxito" src="https://user-images.githubusercontent.com/117380181/233631920-49f09f09-403f-45c6-aea2-dc501d1f7f3b.png">
 
 </p>
 
@@ -242,10 +245,16 @@ app.get('/funkos', (req, res) =>{
 ``` 
 <p align="center">
 
-*Ejemplo de ejecución con éxito*
+*Ejemplos de ejecución con éxito*
 </p>
 
 <p align="center">
+<img width="899" alt="list éxito" src="https://user-images.githubusercontent.com/117380181/233631977-2f4079f2-b7f8-4edb-822d-99f256645ffd.png">
+
+</p>
+
+<p align="center">
+<img width="917" alt="list funko éxito" src="https://user-images.githubusercontent.com/117380181/233631993-b8738692-7d4a-4738-baf4-e9fab9867d04.png">
 
 </p>
 
