@@ -1,6 +1,10 @@
 import { Funko } from './funko.js';
-import * as fs from 'fs';
+import { MongoClient, ObjectId } from 'mongodb';
 import chalk from 'chalk';
+import { response } from 'express';
+
+const dbURL = 'mongodb://127.0.0.1:27017';
+const dbName = 'funkos-app';
 
 /**
  * Clase para todas las operaciones que se pueden realizar con los funkos
@@ -41,14 +45,37 @@ export class FunkoOperations {
      * @param username - nombre del usuario
      */
     public updateFunko(updatedFunko: Funko, username: string): boolean {
-        const index = this.funkos.findIndex(funko => funko.id === updatedFunko.id);
+        MongoClient.connect(dbURL).then((client) => {
+            const db = client.db(dbName);
+          
+            return db.collection<Funko>('funko').updateOne({id: updatedFunko.id}, {
+                $set: {
+                    nombre: updatedFunko.nombre,
+                    descripcion: updatedFunko.descripcion,
+                    tipo: updatedFunko.tipo,
+                    genero: updatedFunko.genero,
+                    franquicia: updatedFunko.franquicia,
+                    numero: updatedFunko.numero,
+                    exclusivo: updatedFunko.exclusivo,
+                    caracteristicasEspeciales: updatedFunko.caracteristicasEspeciales,
+                    valorDeMercado: updatedFunko.valorDeMercado
+                }
+            });
+          }).then((result) => {
+            console.log(result);
+          }).catch((error) => {
+            console.log(error);
+          });
+        return true;
+        /*const index = this.funkos.findIndex(funko => funko.id === updatedFunko.id);
         if (index !== -1) {
             this.funkos[index] = updatedFunko;
             this.saveFunko(updatedFunko);
             return true;
         } else {
             return false;
-        }
+        }*/
+
     }
 
     /**
@@ -57,14 +84,8 @@ export class FunkoOperations {
      * @param username - nombre del usuario
      */
     public deleteFunko(id: string, username: string): boolean {
-        const index = this.funkos.findIndex(funko => funko.id === id);
-        if (index !== -1) {
-            this.funkos.splice(index, 1);
-            this.deleteFunkoFile(id);
-            return true;
-        } else {
-            return false;
-        }
+        this.deleteFunkoFile(id);
+        return true
     }
 
     /**
@@ -81,7 +102,19 @@ export class FunkoOperations {
      * @param username - nombre del usuario 
      * @returns Devuelve la información de todos los Funkos del usuario
      */
-    public listFunkos(username: string): string {
+    public listFunkos(username: string): string | void{
+        MongoClient.connect(dbURL).then((client) => {
+            const db = client.db(dbName);
+          
+            const funko = db.collection<Funko>('funko').find({});
+            return funko
+            //return this.toString(funko);
+          }).then((result) => {
+            console.log(result);
+          }).catch((error) => {
+            console.log(error);
+          });
+        /*
         if (this.funkos.length === 0) {
             console.log(chalk.red(`No Funkos in the list of ${username}`));
             return "Error";
@@ -92,7 +125,7 @@ export class FunkoOperations {
         for (const funko of this.funkos) {
             result += this.toString(funko);
         }
-        return result;
+        return result;*/
     }
 
     /**
@@ -101,12 +134,30 @@ export class FunkoOperations {
      * @param username - nombre del usuario
      * @returns returnea para hacer un break en caso de que no encuentre el Funko
      */
-    public getFunkoById(id: string, username: string): string {
+    public getFunkoById(id: string, username: string): string | void {
+        MongoClient.connect(dbURL).then((client) => {
+            const db = client.db(dbName);
+          
+            const funko = db.collection<Funko>('funko').find(
+              {
+                id: id
+              }
+            );
+            return funko
+            //return this.toString(funko);
+          }).then((result) => {
+            console.log(result);
+            //aqui hacer response
+            return result;
+          }).catch((error) => {
+            console.log(error);
+          });
+        /*
         const funko = this.funkos.find(f => f.id === id);
         if (!funko) {
             return "Error";
         }
-        return this.toString(funko);
+        return this.toString(funko);*/
     }
 
     public toString(funko: Funko): string{
@@ -164,7 +215,17 @@ export class FunkoOperations {
      * this.userDirectory, los lee y los analiza en objetos Funko
      */
     private loadFunkos(): void {
-        if (!fs.existsSync(this.userDirectory)) {
+        MongoClient.connect(dbURL).then((client) => {
+            const db = client.db(dbName);
+            const all = db.collection<Funko>('funko').find().toArray();
+            //this.funkos.push(all);
+            return all;
+          }).then((result) => {
+            console.log(result);
+          }).catch((error) => {
+            console.log(error);
+          });
+        /*if (!fs.existsSync(this.userDirectory)) {
             fs.mkdirSync(this.userDirectory);
         }
 
@@ -174,7 +235,7 @@ export class FunkoOperations {
             const content = fs.readFileSync(`${this.userDirectory}/${file}`, 'utf-8');
             const funko: Funko = JSON.parse(content);
             this.funkos.push(funko);
-        });
+        });*/
     }
 
     /**
@@ -183,9 +244,33 @@ export class FunkoOperations {
      * @param funko 
      */
     private saveFunko(funko: Funko): void {
+        MongoClient.connect(dbURL).then((client) => {
+            const db = client.db(dbName);
+          
+            return db.collection<Funko>('funko').insertOne(
+              {
+                id: funko.id,
+                nombre: funko.nombre,
+                descripcion: funko.descripcion,
+                tipo: funko.tipo,
+                genero: funko.genero,
+                franquicia: funko.franquicia,
+                numero: funko.numero,
+                exclusivo: funko.exclusivo,
+                caracteristicasEspeciales: funko.caracteristicasEspeciales,
+                valorDeMercado: funko.valorDeMercado
+
+              }
+            );
+          }).then((result) => {
+            console.log(result);
+          }).catch((error) => {
+            console.log(error);
+          });
+        /*
         const filePath = `${this.userDirectory}/${funko.id}.json`;
         const content = JSON.stringify(funko);
-        fs.writeFileSync(filePath, content);
+        fs.writeFileSync(filePath, content);*/
     }
 
     /**
@@ -194,7 +279,19 @@ export class FunkoOperations {
      * @param funkoId 
      */
     private deleteFunkoFile(funkoId: string): void {
+        MongoClient.connect(dbURL).then((client) => {
+            const db = client.db(dbName);
+          
+            return db.collection<Funko>('funko').deleteOne({
+              id: funkoId
+            });
+          }).then((result) => {
+            console.log(result.deletedCount);
+          }).catch((error) => {
+            console.log(error);
+          });
+        /*
         const filePath = `${this.userDirectory}/${funkoId}.json`;
-        fs.unlinkSync(filePath);
+        fs.unlinkSync(filePath);*/
     }
 }
